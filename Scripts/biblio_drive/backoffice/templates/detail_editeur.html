@@ -1,0 +1,109 @@
+<!-- detail_editeur.html est le template permettant d'afficher le détail d'un editeur
+    Code réalisé par Wallywon, tout droit réservé -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ editeur.pub_name }}</title>
+    <style>
+        body {
+            background-color: #f0f0f0; /* Fond gris */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Police d'écriture */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333; /* Couleur du texte */
+            text-align: center;
+            margin: 20px 0; /* Espace autour du titre */
+        }
+
+        p {
+            color: #333; /* Couleur du texte */
+            text-align: center;
+            margin: 10px 0; /* Espace autour du texte */
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #d2b48c;
+            color: #fff;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #a3744b;
+        }
+
+        button {
+            background-color: #d2a679;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #a3744b;
+        }
+    </style>
+</head>
+<body>
+    <!-- afficher les informations sur l'éditeur-->
+    <h1>{{ editeur.pub_name }}</h1>
+    <p>Nom de la société: {{ editeur.pub_company_name }}</p>
+    <p>Adresse: {{ editeur.pub_address }}</p>
+
+    <h2>Livres publiés par cet éditeur</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Livre</th>
+                <th>Auteur</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--itère sur tous les livre de livres_editeur (définie dans ma vue)-->
+            {% for livre in livres_editeur %}
+                <tr>
+                    <!--Pour chaque livre associé à l'éditeur, afficher le livre + si l'user est identifié, le livre est cliquable et redirige vers le livre détail-->
+                    <td>{% if user.is_authenticated %}<a href="{% url 'detail_livre' livre.book_id %}">{{ livre.book_name }}</a>{% else %}{{ livre.book_name }}{% endif %}</td>
+                    <!--Si le livre a des auteurs associé + ils sont cliquable dasn tous les cas -->
+                    {% if livre.bookauthor_set.exists %}
+                        <td><a href="{% url 'author_detail' aut_id=livre.bookauthor_set.first.BookAuthor_author.aut_id %}">{{ livre.bookauthor_set.first.BookAuthor_author.aut_author }}</a></td>
+                    {% else %}
+                        <td>Auteur inconnu</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'home1' %}"><button>Retourner à l'accueil</button></a>
+</body>
+</html>

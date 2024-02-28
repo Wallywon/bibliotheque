@@ -1,0 +1,82 @@
+<!-- authorDetail.html est le template permettant d'afficher le détail d'un autheur
+    Code réalisé par Wallywon, tout droit réservé -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails de l'Auteur</title>
+    <style>
+        /* Votre style existant */
+
+        table {
+            width: 80%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #d2b48c;
+            color: #fff;
+        }
+
+        a.book-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        a.book-link:hover {
+            color: #a3744b;
+        }
+
+        button {
+            background-color: #d2a679;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #a3744b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Détails de l'Auteur</h1>
+    <p>{{ author.aut_author }}</p>
+
+    <!-- Tableau des livres de l'auteur -->
+    <table>
+        <thead>
+            <tr>
+                <th>Titre du Livre</th>
+                <th>Détails du livre</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--itère sur tous les book liés à mon author dans BookAuthor(model)-->
+            {% for book in author.bookauthor_set.all %}
+                <tr>
+                    <!-- affichage du nom du livre-->
+                    <td>{{ book.BookAuthor_book.book_name }}</td>
+                    <!--bouton optionnel, n'apparait que si le user est authentifié-->
+                    <td>{% if user.is_authenticated %}<a href="{% url 'reserver_livre' book.BookAuthor_book.book_id %}"><button>Détails</button></a>{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'home1' %}"><button>Retourner à l'accueil</button></a>
+</body>
+</html>

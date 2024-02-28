@@ -1,0 +1,93 @@
+<!-- detail_livre.html est le template permettant d'afficher le détail d'un livre
+    Code réalisé par Wallywon, tout droit réservé -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ book.book_name }}</title>
+    <style>
+        body {
+            background-color: #f0f0f0; /* Fond gris */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Police d'écriture */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333; /* Couleur du texte */
+            text-align: center;
+            margin: 20px 0; /* Espace autour du titre */
+        }
+        ul {
+            list-style-type: none; /* Supprime les puces de la liste */
+            padding: 0;
+            margin: 0;
+            text-align: left; /* Aligner le texte à gauche */
+        }
+
+        p {
+            color: #333; /* Couleur du texte */
+            margin: 10px 0; /* Espace autour du texte */
+        }
+
+        button {
+            background-color: #d2b48c; /* Couleur du bouton */
+            color: #fff; /* Couleur du texte du bouton */
+            padding: 10px 20px; /* Espacement interne du bouton */
+            border: none;
+            border-radius: 5px; /* Coins arrondis du bouton */
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px; /* Espace au-dessus du bouton */
+        }
+
+        button:hover {
+            background-color: #a3744b; /* Changement de couleur au survol */
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ book.book_name }}</h1>
+    <ul>
+        <!--affihcer les informations sur le livre et le premier auteur (si plusieurs)-->
+        <p>Book type: {{ book.book_type }}</p>
+        <p>Auteur : {% if book.bookauthor_set.exists %}<a href="{% url 'author_detail' book.bookauthor_set.first.BookAuthor_author.aut_id %}">{{ book.bookauthor_set.first.BookAuthor_author.aut_author }}</a>{% else %}Auteur inconnu{% endif %}</p>
+        <p>Quantité: {{ book.book_quantite }}</p>
+        <p>Éditeur: {{ book.book_publisher.pub_name }}</p>
+
+        <!--si le user est identifié alorss-->
+        {% if user.is_authenticated %}
+        <!-- si le livre est reservé par le user identifié -->
+            {% if is_book_reserved %}
+                <p>Vous avez déjà réservé ce livre.</p>
+            {% endif %}
+            <!--botuton pour réserver, utilise la méthode post -->
+            <form action="{% url 'reserver_livre' book.book_id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Réserver ce livre</button>
+            </form>
+
+            <!-- bouton pour rendre un livre (ne rend le livre que si la reservation existe dans la vue) -->
+            <form action="{% url 'rendre_livre' book.book_id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Rendre ce livre</button>
+            </form>
+        {% else %}
+            <script>
+                // Redirige automatiquement vers la page de connexion lorsque l'user n'est pas connecté
+                window.location.href = "{% url 'login' %}";
+            </script>
+        {% endif %}
+
+        <a href="{% url 'home1' %}"><button>Retourner à l'accueil</button></a>
+    </ul>
+</body>
+</html>

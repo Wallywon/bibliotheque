@@ -1,0 +1,106 @@
+<!-- Livre.html est le template permettant d'afficher la liste des livres
+    Code réalisé par Wallywon, tout droit réservé -->
+
+<!-- prepare le template a utilisé des fichiers statiques-->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Livres</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: relative; /* Ajout de position relative pour permettre position:absolute à l'intérieur */
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+            column-count: 3;
+            column-gap: 20px;
+        }
+
+        li {
+            break-inside: avoid;
+            margin-bottom: 20px;
+            padding: 5px;
+            border: 10px solid #d2b48c;
+            box-sizing: border-box;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        img {
+            max-width: 100%; /* Rendre les images responsives */
+            max-height: 150px; /* Hauteur maximale des images */
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #d2b48c;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #a3744b;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            display: block;
+            margin: 10px 0;
+        }
+
+        a:hover {
+            color: #a3744b;
+        }
+
+        /* Nouveau style pour le bouton "Mon compte" */
+        .mon-compte {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'login' %}" class="mon-compte"><button>Mon compte</button></a>
+    <h1>Liste des Livres</h1>
+    <a href="{% url 'home1' %}"><button>Retourner à l'accueil</button></a>
+    <ul class="livre-liste">
+        <!--pour chaque livre dans livres, afficher l'image associée et le bouton Détail du livre -->
+        {% for livre in livres %}
+            <li>
+                <img src="/media/{{ livre.book_image }}" alt="{{ livre.book_name }}">
+                <a href="{% url 'detail_livre' livre.book_id %}">
+                    <button>Détail</button>
+                </a>          
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

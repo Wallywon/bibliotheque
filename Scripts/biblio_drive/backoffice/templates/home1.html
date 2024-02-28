@@ -1,0 +1,58 @@
+<!-- home1.html est le template permettant d'afficher ma page d'accueil
+    Code réalisé par Wallywon, tout droit réservé -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+    <style>
+        body {
+            background-color: #f0f0f0; /* Fond gris */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Police d'écriture */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333; /* Couleur du texte */
+            text-align: center;
+            margin-bottom: 20px; /* Espace en dessous du titre */
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button {
+            background-color: #d2a679; /* Marron clair */
+            color: #fff; /* Couleur du texte */
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px; /* Forme arrondie */
+            margin: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #a3744b; /* Changement de couleur au survol */
+        }
+    </style>
+</head>
+<body>
+    <h1>Accueil</h1>
+    <a href="{% url 'listAuthor' %}"><button>Liste des Auteurs</button></a>
+    <a href="{% url 'livre_liste' %}"><button>Liste des livres</button></a>
+    <!--A FAIRE, liste editeur sous le meme principe que livre et Auteurs -->
+    <a href="{% url 'listEditeur' %}"><button>Liste des Editeurs</button></a>
+    <br><br>
+    <a href="{% url 'login' %}"><button>Mon compte</button></a>
+</body>
+</html>

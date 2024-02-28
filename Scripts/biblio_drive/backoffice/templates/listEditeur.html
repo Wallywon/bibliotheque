@@ -1,0 +1,74 @@
+<!-- listEditeur.html est le template permettant d'afficher la liste des éditeurs
+    Code réalisé par Wallywon, tout droit réservé -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Editeurs</title>
+    <style>
+        body {
+            background-color: #f0f0f0; /* Fond gris */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Police d'écriture */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333; /* Couleur du texte */
+            text-align: center;
+            margin: 20px 0; /* Espace autour du titre */
+        }
+
+        ul {
+            list-style-type: none; /* Supprime les puces de la liste */
+            padding: 0;
+            margin: 0;
+            text-align: left; /* Aligner le texte à gauche */
+        }
+
+        li {
+            margin: 10px 0;
+        }
+        button {
+            background-color: #d2b48c; /* Couleur du bouton */
+            color: #fff; /* Couleur du texte du bouton */
+            padding: 10px 20px; /* Espacement interne du bouton */
+            border: none;
+            border-radius: 5px; /* Coins arrondis du bouton */
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px; /* Espace au-dessus du bouton */
+        }
+
+        button:hover {
+            background-color: #a3744b; /* Changement de couleur au survol */
+        }
+
+        a {
+            text-decoration: none;
+            color: #333; /* Couleur du texte */
+            font-weight: bold;
+            display: block; /* Occupe toute la largeur disponible */
+        }
+
+        a:hover {
+            color: #a3744b; /* Changement de couleur au survol */
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste des Editeurs</h1>
+    <ul>
+        <!--Pour tous les editeur dans editeurs créé une ligne avec le pub_name(nom de l'éditeur), cliquable, renvoie vers le détail de l'éditeur-->
+        {% for editeur in editeurs %}
+            <li><a href="{% url 'detail_editeur' editeur.pub_id %}">{{ editeur.pub_name }}</a></li>
+        {% endfor %}
+    </ul>
+    
+    <a href="{% url 'home1' %}"><button>Retourner à l'accueil</button></a>
+</body>
+</html>
