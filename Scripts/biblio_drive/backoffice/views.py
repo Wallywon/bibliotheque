@@ -155,3 +155,23 @@ def user_registration(request):
     else:
         form = UserRegistrationForm()
     return render(request, 'registration/user_registration.html', {'form': form})
+
+#Permet de créer un nouveau livre
+def create_book(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = BookForm(request.POST, request.FILES)
+            if form.is_valid():
+                # Si le formulaire est bien remplie on commence par créer le nouveau livre 
+                new_book = form.save()
+                # On récupère l'autheur du formulaire
+                author = form.cleaned_data['author'] 
+                # Si un autheur est sélectionné, on créé une ligne dans la table BookAuthor
+                if author: 
+                    BookAuthor.objects.create(BookAuthor_author=author, BookAuthor_book=new_book)
+                return redirect('livre_liste')
+        else:
+            form = BookForm()
+        return render(request, 'create_book.html', {'form': form})
+    else :
+        return redirect('livre_liste')
