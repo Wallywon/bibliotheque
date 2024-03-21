@@ -91,6 +91,9 @@
     <a href="{% url 'login' %}" class="mon-compte"><button>Mon compte</button></a>
     <h1>Liste des Livres</h1>
     <a href="{% url 'home1' %}"><button>Retourner à l'accueil</button></a>
+    {% if user.is_authenticated %}
+    <a href="{% url 'create_book' %}"><button>Ajouter un nouveau livre</button></a>
+    {% endif %}
     <ul class="livre-liste">
         <!--pour chaque livre dans livres, afficher l'image associée et le bouton Détail du livre -->
         {% for livre in livres %}
