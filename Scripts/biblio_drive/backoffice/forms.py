@@ -7,6 +7,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 #import de User qui est le modèle d'utilisateur fourni par Django
 from django.contrib.auth.models import User
+#import de Book Author et Publisher qui sont des modèles Custo
+from .models import Book, Author, Publisher
 
 # UserRegistrationForm hérite des fonctionnalités de UserCreationForms
 class UserRegistrationForm(UserCreationForm):
@@ -14,3 +16,23 @@ class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2']
+
+
+class BookForm(forms.ModelForm):
+    author = forms.ModelChoiceField(
+        queryset=Author.objects.all(),
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        label="Auteur"
+    )
+
+    class Meta:
+        model = Book
+        fields = ['book_name', 'book_type', 'book_publisher', 'book_quantite', 'book_image', 'author'] # Incluez 'author' si vous voulez qu'il soit traité comme les autres champs du modèle
+        widgets = {
+            'book_publisher': forms.Select(attrs={'class': 'form-control'}),
+            'book_type': forms.NumberInput(attrs={'class': 'form-control'}),
+            'book_quantite': forms.NumberInput(attrs={'class': 'form-control'}),
+            'book_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'book_image': forms.FileInput(attrs={'class': 'form-control-file'}),
+        }
