@@ -24,7 +24,7 @@ from django.shortcuts import render, redirect
 #récupère un objet de la bdd et renvoie une erreur 404 si pas trouvé
 from django.shortcuts import get_object_or_404
 
-
+from .forms import BookForm
 #---------------- Auteurs -----------------
 
 #permet de lister tous les autheurs
