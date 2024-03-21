@@ -43,6 +43,8 @@ urlpatterns=[
     path('logout/', user_logout, name='logout'),   # path('listing2/',views.listing2,name="listing2"),  
     #   path('listing/',views.listing,name="listing"),
     path('login/', LoginView.as_view(), name='login'),
+    path('create_book/', create_book, name='create_book'), # Creation d'un nouveau livre 
+
 
 
 ]
